@@ -1,7 +1,6 @@
 FROM node:17
 
-COPY dist ./dist
-COPY node_modules ./node_modules
+COPY . ./
 
 ENV NODE_ENV="production"
 

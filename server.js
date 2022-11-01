@@ -1,21 +1,28 @@
-const express = require('express');
-const path = require('path');
-const dotenv = require('dotenv');
+import express from 'express'
+import path from 'path'
+import dotenv from 'dotenv'
 
 dotenv.config()
 
 const app = express()
 const port = 8080
-const buildPath = path.resolve(__dirname, './dist')
+
+const BUILD_PATH = path.resolve(path.resolve(), './dist')
 
 app.set('trust proxy', 1)
-app.use(basePath, express.static(buildPath, { index: false }))
+app.use('/', express.static(BUILD_PATH))
 
-app.get(`isalive|isready`, (req, res) => {
+app.get('/isalive', (req, res) => {
     res.send('OK')
 })
 
-app.use(/^(?!.*\/(internal|static)\/).*$/, (req, res) => res.sendFile(`index.html`))
+app.get('/isready', (req, res) => {
+    res.send('OK')
+})
+
+app.use(/^(?!.*\/(internal|static)\/).*$/, (req, res) =>
+    res.sendFile(path.join(BUILD_PATH, 'index.html')),
+)
 
 app.listen(port, () => {
     console.log(`ds-react-ts app listening at http://localhost:${port}`)
